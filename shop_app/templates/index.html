@@ -6,17 +6,15 @@
 
 {% block content %}
    <div class="container-fluid">
-      <div class="row" style="margin-top: 6%">
-
-        <div class="col-sm-8 blog-main">
-
-          <div class="blog-post">
-              <div class="row">
+      <div class="row indexTop">
+        <div class="col-sm-8">
+          <!-- <div class="blog-post">
+              <div class="row"> -->
                   {% for item in items %}
                       <div class="col-md-4">
                         <div class="thumbnail">
                             <a href="{{ item.get_absolute_url }}">
-                                <img src="{% if item.image %} {{ item.image.url }} {% else %} {% static 'img/default.png' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+                                <img src="{% if item.image %} {{ item.image.url }} {% else %} {% static 'img/default.png' %} {% endif %}" style="height: 130px; width: auto">
                             </a>
                             <div class="caption">
                                 <h3 class="text-center">
@@ -30,12 +28,11 @@
               </div>
 
 
-          </div><!-- /.blog-post -->
+<!--           </div>
 
-        </div><!-- /.blog-main -->
+        </div> -->
 
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-          <div class="sidebar-module">
+        <div class="col-sm-3 col-sm-offset-1">
             <h4>Categories</h4>
             <ol class="list-unstyled">
               <li {% if not category %} class="active"{% endif %}><a href="{% url 'index' %}">All</a></li>
@@ -46,8 +43,7 @@
               </li>
             {% endfor %}
             </ol>
-          </div>
-        </div><!-- /.blog-sidebar -->
+        </div>
 
       </div><!-- /.row -->
 

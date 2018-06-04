@@ -13,7 +13,7 @@ def index(request, category_slug=None):
     items = Item.objects.filter(available=True)
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
-        items = item.objects.filter(category=category)
+        items = Item.objects.filter(category=category)
     context = {
         'category': category,
         'categories': categories,
