@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 def index(request, category_slug=None):
     category = None
     categories = Category.objects.all()
-    items = item.objects.filter(available=True)
+    items = Item.objects.filter(available=True)
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         items = item.objects.filter(category=category)
