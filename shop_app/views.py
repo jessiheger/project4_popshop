@@ -103,24 +103,6 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect('/')
-
-
-# OLD CART_DETAIL VIEW:
-# def cart_detail(request):
-#     print('HIHLSDHGKH')
-#     if request.method == 'POST':
-#         # cart = Cart(request)
-#         for item in cart:
-#             # uses the quantity property of the CartAddItemForm: 
-#             item['update_quantity_form'] = CartAddItemForm(initial={'quantity': item['quantity'], 'update': True})
-#         # render a template called cart_detail.html
-#         return render(request, 'cart_detail.html', {'cart': cart})
-#     else:
-#         print('GET CART DETAIL?', Cart.items)
-#         cart = Cart(user_id = request.user.id)
-#         # cart= Cart(request)
-#         return render(request, 'cart_detail.html')
-#         return HttpResponse('STUB')
+    return redirect('login')
 
 
