@@ -1,10 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Item, Category
-# from .forms import CatForm, LoginForm
+from .models import Item, Category, Cart, Cart_items
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-
+# import django decorator to post our form.
+from django.views.decorators.http import require_http_methods
+from .forms import CartAddItemForm
 
 # Homepage - see all items
 def index(request, category_slug=None):
@@ -21,45 +22,72 @@ def index(request, category_slug=None):
     }
     return render(request, 'index.html', context)
 
-
 # Shows detail of one item
-def detail(request, id, slug):
-    print('I FOUND THE DETAIL ROUTE', request) 
-    item = get_object_or_404(item, id=id, slug=slug, available=True)
+def detail(request, item_id):
+    print('I FOUND THE DETAIL ROUTE', item_id) 
+    item = get_object_or_404(Item, id=item_id, available=True)
+    #creates CartAddItemForm on each item detail view:
+    cart_item_form = CartAddItemForm()
     context = {
-        'item': item
+        'item': item,
+        'cart_item_form': cart_item_form
     }
     return render(request, 'detail.html', context)
 
 
-######### FIX THIS ONE ##############
-#from detail view, allow user to add the item to their cart
-def add_item(request):
-    item_id = request.GET.get('item_id', None)
-    quantity = 0
-    if (item_id):
-        item = Item.objects.get(id=int(item_id))
-        if item is not None:
-            quantity = item.quantity + 1
-            item.quantity = quantity
-            item.save()
-    return HttpResponse(quantity)
+###### CART FUNCTIONS ########
 
-# displays all items in user's cart
-def cart(request, username):
-    user = User.objects.get(username=username)
-    items = Item.objects.filter(user=user)
-    return render(request, 'cart.html', {'username': username, 'items': items})
+# Decorator to require that a view only accepts the POST method:
+@require_http_methods(["GET", "POST"])
 
-######### FIX THIS ONE ##############
-#from cart view, allow user to add the item to their cart
-def delete_item(request):
-    item_id = request.GET.get('item_id', None)
-    if (item_id):
-        item = Item.objects.get(id=int(item_id))
-        if item is not None:
-            quantity = item.quantity - 1
-            item.quantity = quantity
-            item.save()
-    return HttpResponse(quantity)
+# def cart_detail(request):
+#     print('HIHLSDHGKH')
+#     if request.method == 'POST':
+#         # cart = Cart(request)
+#         for item in cart:
+#             # uses the quantity property of the CartAddItemForm: 
+#             item['update_quantity_form'] = CartAddItemForm(initial={'quantity': item['quantity'], 'update': True})
+#         # render a template called cart_detail.html
+#         return render(request, 'cart_detail.html', {'cart': cart})
+#     else:
+#         print('GET CART DETAIL?', Cart.items)
+#         cart = Cart(user_id = request.user.id)
+#         # cart= Cart(request)
+#         return render(request, 'cart_detail.html')
+#         return HttpResponse('STUB')
+
+
+def cart_detail(request):
+    print('USER is', request.user)
+    cart = Cart.objects.all().filter(id=19)
+    print('we hit the cart_detail request', cart)
+    # for item in cart:
+    #     item['update_quantity_form'] = CartAddItemForm(initial={'quantity': item['quantity'], 'update': True})
+    return render(request, 'cart_detail.html', {'cart': cart})
+
+def cart_add(request, item_id):
+    print('ADD ITEM SUCCESS', item_id) 
+    cart = Cart(request)
+    # item = get_object_or_404(Item, id=item_id)
+    form = CartAddItemForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data
+        # cart.add(item=item, quantity=cd['quantity'], update_quantity=cd['update'])
+        # cart_obj = form.save()
+        added_item = Item.objects.get(id=item_id)
+        # cart_obj.items.add(new_cart)
+        print('is valid', added_item)
+        # new_cart = Cart()
+        # my_cart = Cart(items=added_item)
+        # new_cart.save()
+        new_cart = Cart.objects.create(items=added_item)
+    print('hit right before redirect on post request')
+    return redirect('cart_detail')
+
+def cart_remove(request, item_id):
+    cart = Cart(request)
+    item = get_object_or_404(Item, id=item_id)
+    cart.remove(item)
+    # if item is removed, redirect user to cart_detail page (defined below)
+    return redirect('cart_detail')
 

@@ -8,7 +8,7 @@
 
 
 from django.contrib import admin
-from .models import Category, Item
+from .models import Category, Item, Cart, Cart_items
  
  
 class CategoryAdmin(admin.ModelAdmin):
@@ -27,3 +27,5 @@ class ItemAdmin(admin.ModelAdmin):
  
  
 admin.site.register(Item, ItemAdmin)
+
+admin.site.register([Cart, Cart_items])
