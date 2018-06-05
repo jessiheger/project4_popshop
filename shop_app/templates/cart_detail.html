@@ -9,11 +9,11 @@
 
     <div class="container">
         <div class="row" style="margin-top: 6%">
-        <h2>Your Shopping Cart
+        <h2>Your Shopping Bag
             <span class="badge pull-right">
                 {% with total_items=items|length %}
                     {% if items|length > 0 %}
-                        My Shopping Order:
+                        My Shopping Bag:
                         <a href="{% url "cart_detail" %}" style="color: #ffffff">
                             {{ total_items }} item {{ total_items|pluralize }}, USD ${{ user.cart.get_total_price }}
                         </a>
@@ -39,7 +39,7 @@
                         <tr>
                             <td>
                                 <a href="{{ item.get__absolute_url }}">
-                                    <img src="{% if item.image %} {{ item.image.url }} {% else %} {% static 'img/default.png' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+                                    <img src="{% if item.image %} {{ item.image }} {% else %} {% static 'img/default.png' %} {% endif %}" alt="..." style="height: 130px; width: auto">
                                 </a>
                             </td>
                             <td>{{ item.name }}</td>

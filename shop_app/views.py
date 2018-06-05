@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Item, Category, Cart, Cart_items
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+
 # import django decorator to post our form.
 from django.views.decorators.http import require_http_methods
-from .forms import CartAddItemForm, LoginForm
+# from django.contrib.auth.forms import UserCreationForm
+from .forms import CartAddItemForm, LoginForm, SignupForm
+from .models import Item, Category, Cart, Cart_items
+
 
 # Homepage - see all items
 def index(request, category_slug=None):
@@ -56,7 +59,7 @@ def cart_detail(request):
             item['update_quantity_form'] = CartAddItemForm(initial={'quantity': cart_item.quantity, 'update': True})
         return render(request, 'cart_detail.html', {'items': items})
     else:
-        return redirect('index')
+        return redirect('login')
 
 def cart_add(request, item_id):
     if request.user.is_authenticated:
@@ -71,7 +74,7 @@ def cart_add(request, item_id):
         print('hit right before redirect on post request')
         return redirect('cart_detail')
     else:
-        return redirect('index')
+        return redirect('login')
 
 def cart_remove(request, item_id):
     cart = Cart(request)
@@ -79,6 +82,29 @@ def cart_remove(request, item_id):
     cart.remove(item)
     # if item is removed, redirect user to cart_detail page (defined below)
     return redirect('cart_detail')
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            u = form.cleaned_data['username']
+            e = form.cleaned_data['email']
+            p = form.cleaned_data['password']
+            user = User.objects.create_user(username = u, email = e, password = p)
+            print('created new user', user)
+            user.save()
+            print("saved new user:", user)
+            user = authenticate(username = u, password = p)
+            print("authenticated new user:", user)
+            # form.save()
+            # username = form.cleaned_data.get('username')
+            # raw_password = form.cleaned_data.get('password1')
+            # user = authenticate(username=username, password=raw_password)
+            login(request,user)
+            return redirect('index')
+    else:
+        form = SignupForm()
+    return render(request, 'signup.html', {'form': form})
 
 
 def login_view(request):
@@ -90,7 +116,7 @@ def login_view(request):
             p = form.cleaned_data['password']
             user = authenticate(username = u, password = p)
             if user is not None:
-                if user. is_active:
+                if user.is_active:
                     login(request, user)
                     return HttpResponseRedirect('/')
                 else:
@@ -103,6 +129,16 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    # return  HttpResponseRedirect('index')
+    return redirect('index')
+
+# def logout(request):
+#     if request.user is not None:
+#         if request.user. is_active:
+#             logout(request)
+#             return redirect('login')
+#     else:
+#         form = LoginForm()
+#         return render(request, 'login.html', {'form': form})  
 
 

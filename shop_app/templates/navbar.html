@@ -7,11 +7,15 @@
            <span class="sr-only">Toggle navigation</span>
          </button>
          <a class="navbar-brand" href="{% url 'index' %}" style="color: black">POP SHOP</a>
-         <a class="navbar-brand" href="{% url 'cart_detail' %}">My Cart</a>
       </div>
+         <a class="navbar-brand" href="{% url 'cart_detail' %}"><img id="shopping-bag" src="/static/img/shopping_bag.png"></a>
  
   <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <!-- <span class="navbar-right">
+            Navbar text with an inline element
+         </span> -->
+         <span>
          <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                {% if request.user.is_authenticated %}
@@ -20,12 +24,13 @@
                   <li><a href="{% url 'logout' %}">logout</a></li>
                  {% else %}
                   <li class="divider"></li>
-                  <li><a href="login" style="color: black">Sign in</a></li>
-                  <li><a href="#" style="color: black">Sign up</a></li>
+                  <li><a href="{% url 'login' %}" style="color: black">Login in</a></li>
+                  <li><a href="{% url 'signup' %}" style="color: black">Sign up</a></li>
              </ul>
                   {% endif %}
             </li>
          </ul>
+      </span>
       </div><!-- /.navbar-collapse -->
    </div>
 </nav>

@@ -1,4 +1,6 @@
 from django import forms
+# from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.models import User
 
 # const variable = possible choices for # allowed to add to cart
 QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 10)]
@@ -12,4 +14,9 @@ class CartAddItemForm(forms.Form):
 
 class LoginForm(forms.Form):
     username = forms.CharField(label="User Name", max_length=64)
+    password = forms.CharField(widget=forms.PasswordInput())
+
+class SignupForm(forms.Form):
+    username = forms.CharField(label="User Name", max_length=64)
+    email = forms.EmailField(max_length=200, help_text='Required')
     password = forms.CharField(widget=forms.PasswordInput())

@@ -4,6 +4,8 @@ from django.urls import reverse
 from decimal import Decimal
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Category(models.Model):
@@ -30,7 +32,7 @@ class Item(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
     stock = models.PositiveIntegerField()
-    image = models.ImageField(upload_to='items/%Y/%m/%d', blank=True)
+    image = models.CharField(max_length=1000)
     carts = models.ManyToManyField('Cart', blank=False, through='Cart_items')
  
     class Meta:
@@ -47,6 +49,15 @@ class Cart(models.Model):
     # items = models.CharField(max_length=500)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
         # ^ adds a reference to the User table in the db; if user is deleted, so is their cart
+
+@receiver(post_save, sender=User)
+def create_user_cart(sender, instance, created, **kwargs):
+    if created:
+        Cart.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_cart(sender, instance, **kwargs):
+    instance.cart.save()
         
 class Cart_items(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
