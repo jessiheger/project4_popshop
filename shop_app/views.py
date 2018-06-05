@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 # import django decorator to post our form.
 from django.views.decorators.http import require_http_methods
-from .forms import CartAddItemForm
+from .forms import CartAddItemForm, LoginForm
 
 # Homepage - see all items
 def index(request, category_slug=None):
@@ -71,7 +71,7 @@ def cart_add(request, item_id):
     # item = get_object_or_404(Item, id=item_id)
     form = CartAddItemForm(request.POST)
     if form.is_valid():
-        cd = form.cleaned_data
+        # cd = form.cleaned_data
         # cart.add(item=item, quantity=cd['quantity'], update_quantity=cd['update'])
         # cart_obj = form.save()
         added_item = Item.objects.get(id=item_id)
@@ -90,4 +90,29 @@ def cart_remove(request, item_id):
     cart.remove(item)
     # if item is removed, redirect user to cart_detail page (defined below)
     return redirect('cart_detail')
+
+
+def login_view(request):
+    if request.method == 'POST':
+        # if post, then authenticate (user submitted username and password)
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            u = form.cleaned_data['username']
+            p = form.cleaned_data['password']
+            user = authenticate(username = u, password = p)
+            if user is not None:
+                if user. is_active:
+                    login(request, user)
+                    return HttpResponseRedirect('/')
+                else:
+                    print("The account has been disabled.")
+            else:
+                print("The username and/or password is incorrect.")
+    else:
+        form = LoginForm()
+        return render(request, 'login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
 

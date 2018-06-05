@@ -3,6 +3,8 @@ from django.urls import reverse
 # import decimal data type to avoid issue of rounding off with regard to price.
 from decimal import Decimal
 from django.conf import settings
+from django.contrib.auth.models import User
+
 
 class Category(models.Model):
     name = models.CharField(max_length=150, db_index=True)
@@ -43,13 +45,12 @@ class Item(models.Model):
 class Cart(models.Model):
     # items = models.ManyToManyField('Item', blank=False, through='Cart_items')
     items = models.CharField(max_length=500)
-
-
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+        # ^ adds a reference to the User table in the db; if user is deleted, so is their cart
+        
 class Cart_items(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
-        # ^ adds a reference to the User table in the db; if user is deleted, so is their cart
 
     class Meta:
         db_table = 'cart_items_join'

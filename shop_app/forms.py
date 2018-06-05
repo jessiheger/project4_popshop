@@ -8,3 +8,8 @@ class CartAddItemForm(forms.Form):
     quantity = forms.TypedChoiceField(choices=QUANTITY_CHOICES, coerce=int)
     # Update field - either adds or updates number of item to the cart.
     update = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(label="User Name", max_length=64)
+    password = forms.CharField(widget=forms.PasswordInput())
