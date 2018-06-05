@@ -11,11 +11,11 @@
         <div class="row" style="margin-top: 6%">
         <h2>Your Shopping Cart
             <span class="badge pull-right">
-                {% with total_items=cart|length %}
-                    {% if cart|length > 0 %}
+                {% with total_items=items|length %}
+                    {% if items|length > 0 %}
                         My Shopping Order:
                         <a href="{% url "cart_detail" %}" style="color: #ffffff">
-                            {{ total_items }} item {{ total_items|pluralize }}, USD ${{ cart.get_total_price }}
+                            {{ total_items }} item {{ total_items|pluralize }}, USD ${{ user.cart.get_total_price }}
                         </a>
                         {% else %}
                         Your cart is empty.
@@ -35,7 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for item in cart %}
+                {% for item in items %}
                         <tr>
                             <td>
                                 <a href="{{ item.get__absolute_url }}">
@@ -61,7 +61,7 @@
                 <tr style="background-color: #5AC8FA">
                     <td><b>Total</b></td>
                     <td colspan="4"></td>
-                    <td colspan="num"><b>USD ${{ cart.get_total_price }}</b></td>
+                    <td colspan="num"><b>USD ${{ user.cart.get_total_price }}</b></td>
                 </tr>
                 </tbody>
             </table>

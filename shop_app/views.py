@@ -40,49 +40,38 @@ def detail(request, item_id):
 # Decorator to require that a view only accepts the POST method:
 @require_http_methods(["GET", "POST"])
 
-# def cart_detail(request):
-#     print('HIHLSDHGKH')
-#     if request.method == 'POST':
-#         # cart = Cart(request)
-#         for item in cart:
-#             # uses the quantity property of the CartAddItemForm: 
-#             item['update_quantity_form'] = CartAddItemForm(initial={'quantity': item['quantity'], 'update': True})
-#         # render a template called cart_detail.html
-#         return render(request, 'cart_detail.html', {'cart': cart})
-#     else:
-#         print('GET CART DETAIL?', Cart.items)
-#         cart = Cart(user_id = request.user.id)
-#         # cart= Cart(request)
-#         return render(request, 'cart_detail.html')
-#         return HttpResponse('STUB')
-
-
 def cart_detail(request):
-    print('USER is', request.user)
-    cart = Cart.objects.all().filter(id=19)
-    print('we hit the cart_detail request', cart)
-    # for item in cart:
-    #     item['update_quantity_form'] = CartAddItemForm(initial={'quantity': item['quantity'], 'update': True})
-    return render(request, 'cart_detail.html', {'cart': cart})
+    if request.user.is_authenticated:
+        print('USER is', request.user)
+        cart = Cart.objects.get(user=request.user)
+        items = Item.objects.filter(carts=cart).values()
+        print("ITEMSSSS", items)
+        for item in items:
+            print('try to get CI')
+            cart_item = Cart_items.objects.get(item=item['id'], cart=cart.id)
+            print('CI', cart_item)
+            print('QTY', cart_item.quantity)
+            item['quantity'] = cart_item.quantity
+            item['total_price'] = cart_item.quantity * item['price']
+            item['update_quantity_form'] = CartAddItemForm(initial={'quantity': cart_item.quantity, 'update': True})
+        return render(request, 'cart_detail.html', {'items': items})
+    else:
+        return redirect('index')
 
 def cart_add(request, item_id):
-    print('ADD ITEM SUCCESS', item_id) 
-    cart = Cart(request)
-    # item = get_object_or_404(Item, id=item_id)
-    form = CartAddItemForm(request.POST)
-    if form.is_valid():
-        # cd = form.cleaned_data
-        # cart.add(item=item, quantity=cd['quantity'], update_quantity=cd['update'])
-        # cart_obj = form.save()
-        added_item = Item.objects.get(id=item_id)
-        # cart_obj.items.add(new_cart)
-        print('is valid', added_item)
-        # new_cart = Cart()
-        # my_cart = Cart(items=added_item)
-        # new_cart.save()
-        new_cart = Cart.objects.create(items=added_item)
-    print('hit right before redirect on post request')
-    return redirect('cart_detail')
+    if request.user.is_authenticated:
+        print('ADD ITEM SUCCESS', item_id) 
+        cart = Cart.objects.get(user=request.user)
+        item = Item.objects.get(id=item_id)
+        new_cart_item = Cart_items()
+        new_cart_item.cart = cart
+        new_cart_item.item = item
+        new_cart_item.quantity = 1
+        new_cart_item.save()
+        print('hit right before redirect on post request')
+        return redirect('cart_detail')
+    else:
+        return redirect('index')
 
 def cart_remove(request, item_id):
     cart = Cart(request)
@@ -115,4 +104,23 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+
+# OLD CART_DETAIL VIEW:
+# def cart_detail(request):
+#     print('HIHLSDHGKH')
+#     if request.method == 'POST':
+#         # cart = Cart(request)
+#         for item in cart:
+#             # uses the quantity property of the CartAddItemForm: 
+#             item['update_quantity_form'] = CartAddItemForm(initial={'quantity': item['quantity'], 'update': True})
+#         # render a template called cart_detail.html
+#         return render(request, 'cart_detail.html', {'cart': cart})
+#     else:
+#         print('GET CART DETAIL?', Cart.items)
+#         cart = Cart(user_id = request.user.id)
+#         # cart= Cart(request)
+#         return render(request, 'cart_detail.html')
+#         return HttpResponse('STUB')
+
 

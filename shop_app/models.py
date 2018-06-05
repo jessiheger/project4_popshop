@@ -43,17 +43,25 @@ class Item(models.Model):
 
 ## Create class for Cart
 class Cart(models.Model):
-    # items = models.ManyToManyField('Item', blank=False, through='Cart_items')
-    items = models.CharField(max_length=500)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField('Item', blank=False, through='Cart_items')
+    # items = models.CharField(max_length=500)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
         # ^ adds a reference to the User table in the db; if user is deleted, so is their cart
         
 class Cart_items(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
 
     class Meta:
         db_table = 'cart_items_join'
+
+
+
+
+
+
+
 
     # def __init__(self, request):
     #     self.session = request.session
