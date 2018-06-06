@@ -12,6 +12,8 @@ body {
     -webkit-background-size:160px 160px;
     -moz-background-size:160px 160px;
     background-size:160px 160px;
+    
+    padding-top: 10%;
 }
 
 #jumbo {
@@ -98,7 +100,11 @@ nav ul li.active-page {
     font-family: 'Delius Swash Caps', cursive;
     font-size: 40px;
     color: #9EEDA9;
-    margin-top: 40px;
+    /*margin-top: 40px;*/
+}
+
+.detail-card {
+    background-color: pink;
 }
 
 .detail-img {
@@ -109,6 +115,16 @@ nav ul li.active-page {
 .cart-img {
     height: 80px; 
     width: auto;
+}
+
+.detail-card, .form-div {
+    padding: 20px;
+    background-color: white;
+    height: auto;
+}
+
+.image-div {
+
 }
 
 .detail-div {

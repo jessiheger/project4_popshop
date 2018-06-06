@@ -3,14 +3,15 @@
 
 {% block content %}
 <div class="container">
-      <div class="row" style="margin-top: 20%">
-<h1>Login</h1>
-<form method="POST" action=".">
-  {% csrf_token %}
-  {{ form.as_p}}
-  <input type="submit" value="Submit">
-</form>
+   <div class="row">
+         <h2 class="category-name">Log In to Your PopShop Account</h1>
+      <div class="form-div">
+         <form method="POST" action=".">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <input type="submit" value="Submit">
+         </form>
+      </div>
+   </div>
 </div>
-</div>
-
 {% endblock %}

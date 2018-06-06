@@ -3,14 +3,14 @@
 
 {% block content %}
    <div class="container">
-      <div class="row" style="margin-top: 20%">
-         <div class="row">
-            <div class="card">
-               <div class="card-body">
-                  <div class="col-md-6 text-right">
-                     <img class="detail-img" src="{% if item.image %} {{ item.image }} {% else %} {% static 'img/default.png' %} {% endif %}" alt="...">
+      <div class="row">
+         <!-- <div class="row"> -->
+            <div class="detail-card">
+               <!-- <div class="card-body"> -->
+                  <div class="col-12 col-sm-6 image-div">
+                     <img class="detail-img" src="{% if item.image %} {{ item.image }} {% else %} {% static 'img/default.png' %} {% endif %}">
                   </div>
-                  <div class="col-md-6 detail-div">
+                  <div class="col-12 col-sm-6 detail-div">
                      <h3>{{ item.name }}</h3>
                      <h6>Category: <a href="{{ item.category.get_absolute_url }}">{{ item.category }}</a></h6>
                      <p class="text-muted">USD ${{ item.price }}</p>
@@ -21,9 +21,9 @@
                      </form>
                      <p>{{ item.description }}</p>
                   </div>
-               </div>
+               <!-- </div> -->
             </div>
-         </div>
+         <!-- </div> -->
       </div><!-- /.row -->
     </div><!-- /.container -->
 {% endblock %}
