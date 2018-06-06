@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf.urls import url
+
 
 # appname = 'popshop'
 
@@ -11,9 +13,10 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'),
     path('<category_slug>/', views.index, name='by_category'),
     path('<int:item_id>/detail/', views.detail, name='detail'),
-    path('cart/append/<item_id>/', views.cart_add, name='cart_add'),
-    path('cart/remove/<item_id>/', views.cart_remove, name='cart_remove'),
+    path('cart/append/<item_id>/', views.add_to_cart, name='add_to_cart'),
+    path('cart/remove/<item_id>/', views.delete_from_cart, name='delete_from_cart'),
 ]
+
 
 #urls wish list:
 # home page - list of items (GET)

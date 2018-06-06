@@ -50,6 +50,14 @@ class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
         # ^ adds a reference to the User table in the db; if user is deleted, so is their cart
 
+class Cart_items(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+
+    class Meta:
+        db_table = 'cart_items_join'
+        
 @receiver(post_save, sender=User)
 def create_user_cart(sender, instance, created, **kwargs):
     if created:
@@ -59,13 +67,6 @@ def create_user_cart(sender, instance, created, **kwargs):
 def save_user_cart(sender, instance, **kwargs):
     instance.cart.save()
         
-class Cart_items(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-
-    class Meta:
-        db_table = 'cart_items_join'
 
 
 

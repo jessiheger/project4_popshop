@@ -1,7 +1,124 @@
+body {
+    background:
+        -moz-radial-gradient(white 15%, transparent 16%),
+        -moz-radial-gradient(white 15%, transparent 16%),
+        #808080;
+    background:
+        -webkit-radial-gradient(white 15%, transparent 16%),
+        -webkit-radial-gradient(white 15%, transparent 16%),
+        #808080;
+    background-position: 0 0, 80px 80px;
+    
+    -webkit-background-size:160px 160px;
+    -moz-background-size:160px 160px;
+    background-size:160px 160px;
+}
+
+#jumbo {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 50px;
+}
+
+.lead {
+    font-family: 'Delius Swash Caps', cursive;
+}
+
+.vendor-biz {
+    font-family: 'Rozha One', serif;
+    font-size: 50px;
+}
+
+.vendor-name {
+    font-family: 'Rozha One', serif;
+    font-size: 20px;
+}
+
+.featured:hover {
+    text-decoration: none;
+}
+
+.categories {
+    display: inline;
+    text-transform: uppercase;
+}
+
+.categories a:hover {
+    background-color: white;
+    border-radius: 10px;
+}
+
 .indexTop {
     margin-top: 100px;
 }
 
-#shopping-bag {
-    
+.navbar-fixed-top, thead, .last-tr td  {
+    margin-bottom: 0px; 
+    padding-top: 20px;
+    /*padding-bottom: 20px;*/
+    background-color: #9EEDA9;
+}
+
+.brought-by {
+    /*font-family: 'Rozha One', serif;*/
+    font-family: 'Delius Swash Caps', cursive;
+    /*font-family: 'Life Savers', cursive;*/
+    font-size: 15px;
+    padding-left: 50px;
+}
+
+.popshop {
+    font-family: 'Delius Swash Caps', cursive;
+    /*font-family: 'Life Savers', cursive;*/
+    font-size: 25px;
+}
+
+#category-nav {
+    margin-top: -40px;
+}
+
+nav ul li.active-page {
+  background-color:white;
+  border-radius: 10px;
+}
+
+.dropdown-toggle {
+    font-family: 'Delius Swash Caps', cursive;
+    font-size: 20px;
+}
+
+.index-img {
+    /*height: 130px; */
+    height: 150px;
+    /*width: auto;*/
+}
+
+.category-name {
+    text-align: center;
+    font-family: 'Delius Swash Caps', cursive;
+    font-size: 40px;
+    color: #9EEDA9;
+    margin-top: 40px;
+}
+
+.detail-img {
+    height: 170px; 
+    width: auto;
+}
+
+.cart-img {
+    height: 80px; 
+    width: auto;
+}
+
+.detail-div {
+    padding-left: 20px;
+}
+
+.beg-row {
+    margin-top: 6%;
+}
+
+.table {
+    background-color: white;
 }

@@ -2,11 +2,15 @@
 {% load staticfiles %}
 
 {% block content %}
+<div class="container">
+      <div class="row" style="margin-top: 20%">
 <h1>Login</h1>
 <form method="POST" action=".">
   {% csrf_token %}
   {{ form.as_p}}
   <input type="submit" value="Submit">
 </form>
+</div>
+</div>
 
 {% endblock %}

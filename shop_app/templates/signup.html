@@ -2,6 +2,8 @@
 
 
 {% block content %}
+<div class="container">
+      <div class="row" style="margin-top: 20%">
   <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}
@@ -19,4 +21,6 @@
       {% endfor %}
     <button type="submit">Sign up</button>
   </form>
+  <div class="container">
+      <div class="row" style="margin-top: 20%">
 {% endblock %}

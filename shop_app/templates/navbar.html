@@ -1,36 +1,50 @@
 {% load staticfiles %}
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0px; background-color: #5AC8FA;">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="container-fluid">
-      <div class="navbar-header">
+<nav class="navbar navbar-fixed-top" role="navigation">
+   <div class="container-fluid">
+      <div id="app-name" class="navbar-header">
          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-           <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">Toggle navigation</span>
          </button>
-         <a class="navbar-brand" href="{% url 'index' %}" style="color: black">POP SHOP</a>
       </div>
-         <a class="navbar-brand" href="{% url 'cart_detail' %}"><img id="shopping-bag" src="/static/img/shopping_bag.png"></a>
- 
-  <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-         <!-- <span class="navbar-right">
-            Navbar text with an inline element
-         </span> -->
-         <span>
-         <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-               {% if request.user.is_authenticated %}
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: black">{{ request.user.username }}<b class="caret"></b></a>
-               <ul class="dropdown-menu">
-                  <li><a href="{% url 'logout' %}">logout</a></li>
-                 {% else %}
-                  <li class="divider"></li>
-                  <li><a href="{% url 'login' %}" style="color: black">Login in</a></li>
-                  <li><a href="{% url 'signup' %}" style="color: black">Sign up</a></li>
-             </ul>
-                  {% endif %}
-            </li>
-         </ul>
-      </span>
-      </div><!-- /.navbar-collapse -->
-   </div>
+      <div>
+         <a class="featured" href="{% url 'index' %}"><span class="vendor-biz">Frenchie Fab </span><span class="vendor-name">by Karla Ortiz</span></a>
+      </div>
+      <div class="row">
+         <div class="col-sm-12">
+            <div>
+               <span class="brought-by">brought to you by </span><span class="popshop">PopShop</span>
+            </div>
+            <div class="collapse navbar-collapse" id="category-nav">
+               <span>
+                  <ul class="nav navbar-nav navbar-right">
+                     <li {% if not category %} class="active active-page"{% endif %}>
+                        <a class="categories" href="{% url 'index' %}">All</a>
+                     </li>
+                     {% for c in categories %}
+                     <li {% if category.slug == c.slug %} class="active active-page" {% endif %}>
+                        <a class="categories" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                     </li>
+                     {% endfor %}
+                     <li>
+                        <a href="{% url 'cart_detail' %}"><img id="shopping-bag" src="/static/img/shopping_bag.png"></a>
+                     </li>
+                     <li class="dropdown">
+                        {% if request.user.is_authenticated %}
+                        <a href="#" class="dropdown-toggle auth" data-toggle="dropdown">{{ request.user.username }}<b class="caret"></b></a>
+                        <ul class="dropdown-menu auth">
+                           <li><a href="{% url 'logout' %}">logout</a></li>
+                           {% else %}
+                           <li class="divider"></li>
+                           <li><a class="auth" href="{% url 'login' %}">Login</a></li>
+                           <li><a class="auth" href="{% url 'signup' %}">Sign up</a></li>
+                        </ul>
+                        {% endif %}
+                     </li>
+                  </ul>
+               </span>
+            </div><!-- /.navbar-collapse -->
+         </div><!-- /.col-sm-12 -->
+      </div><!-- /.row -->
+   </div><!-- /c.ontainer-fluid -->
 </nav>
+
