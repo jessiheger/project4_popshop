@@ -11,6 +11,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('login/', views.login_view, name='login'),
     path('signup/', views.signup_view, name='signup'),
+    path('previously_featured/', views.previously_featured, name='previously_featured'),
     path('<category_slug>/', views.index, name='by_category'),
     path('<int:item_id>/detail/', views.detail, name='detail'),
     path('cart/append/<item_id>/', views.add_to_cart, name='add_to_cart'),

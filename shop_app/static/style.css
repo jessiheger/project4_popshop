@@ -12,16 +12,10 @@ body {
     -webkit-background-size:160px 160px;
     -moz-background-size:160px 160px;
     background-size:160px 160px;
-    
-    padding-top: 10%;
+    padding-bottom: 50px;
 }
 
-#jumbo {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    line-height: 50px;
-}
-
+/* NAV BAR */
 .lead {
     font-family: 'Delius Swash Caps', cursive;
 }
@@ -50,11 +44,7 @@ body {
     border-radius: 10px;
 }
 
-.indexTop {
-    margin-top: 100px;
-}
-
-.navbar-fixed-top, thead, .last-tr td  {
+.navbar-fixed-top, nav, thead, .last-tr td  {
     margin-bottom: 0px; 
     padding-top: 20px;
     /*padding-bottom: 20px;*/
@@ -72,7 +62,7 @@ body {
 .popshop {
     font-family: 'Delius Swash Caps', cursive;
     /*font-family: 'Life Savers', cursive;*/
-    font-size: 25px;
+    font-size: 30px;
 }
 
 #category-nav {
@@ -89,12 +79,14 @@ nav ul li.active-page {
     font-size: 20px;
 }
 
+/* IMAGES ON INDEX PAGE */
 .index-img {
     /*height: 130px; */
     height: 150px;
     /*width: auto;*/
 }
 
+/* CATEGORY HEADINGS AND LOGIN/SIGN UP HEADING */
 .category-name {
     text-align: center;
     font-family: 'Delius Swash Caps', cursive;
@@ -103,32 +95,21 @@ nav ul li.active-page {
     /*margin-top: 40px;*/
 }
 
-.detail-card {
-    background-color: pink;
+/* ITEM DETAIL PAGE*/
+.detailz {
+    padding: 40px;
+    background-color: white;
 }
 
 .detail-img {
-    height: 170px; 
+    height: 400px; 
     width: auto;
 }
 
+/*CART DETAIL PAGE*/
 .cart-img {
     height: 80px; 
     width: auto;
-}
-
-.detail-card, .form-div {
-    padding: 20px;
-    background-color: white;
-    height: auto;
-}
-
-.image-div {
-
-}
-
-.detail-div {
-    padding-left: 20px;
 }
 
 .beg-row {
@@ -137,4 +118,27 @@ nav ul li.active-page {
 
 .table {
     background-color: white;
+}
+
+/*LOG IN AND SIGN UP PAGES*/
+.form-div {
+    padding: 20px;
+    background-color: white;
+    height: auto;
+}
+
+footer {
+    background-color: #9EEDA9;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /*margin-top: 200px;*/
+}
+
+footer li {
+    font-family: 'Delius Swash Caps', cursive;
+    color: black;
+    list-style-type: none;
+    padding: 5px;
+    text-align: center;
 }

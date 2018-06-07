@@ -2,15 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-
-# import django decorator to post our form.
 from django.views.decorators.http import require_http_methods
-# from django.contrib.auth.forms import UserCreationForm
 from .forms import CartAddItemForm, LoginForm, SignupForm
 from .models import Item, Category, Cart, Cart_items
-
-from django.views.generic.edit import UpdateView
-
+from django.urls import reverse
 
 
 # Homepage - see all items
@@ -30,7 +25,7 @@ def index(request, category_slug=None):
 
 # Shows detail of one item
 def detail(request, item_id):
-    print('I FOUND THE DETAIL ROUTE', item_id) 
+    print('ID of the Detail_View Item', item_id) 
     item = get_object_or_404(Item, id=item_id, available=True)
     #creates CartAddItemForm on each item detail view:
     cart_item_form = CartAddItemForm()
@@ -51,30 +46,34 @@ def cart_detail(request):
         print('USER is', request.user)
         cart = Cart.objects.get(user=request.user)
         items = Item.objects.filter(carts=cart).values()
-        print("ITEMSSSS", items)
+        # cart_items = Cart_items.objects.filter(item_id=item_id).values()
+        print("ITEMS IN MY CART", items)
         for item in items:
-            print('try to get CI')
             cart_item = Cart_items.objects.get(item=item['id'], cart=cart.id)
-            print('CI', cart_item)
+            print('cart_item ID:', cart_item)
             print('QTY', cart_item.quantity)
             item['quantity'] = cart_item.quantity
             item['total_price'] = cart_item.quantity * item['price']
             item['update_quantity_form'] = CartAddItemForm(initial={'quantity': cart_item.quantity, 'update': True})
-        return render(request, 'cart_detail.html', {'items': items})
+        return render(request, 'cart_detail.html', {'items': items, 'cart_items': cart_item})
     else:
         return redirect('login')
 
 def add_to_cart(request, item_id):
     if request.user.is_authenticated:
-        print('ADD ITEM SUCCESS', item_id) 
+        print('ID of item added to cart', item_id) 
         cart = Cart.objects.get(user=request.user)
         item = Item.objects.get(id=item_id)
         new_cart_item = Cart_items()
         new_cart_item.cart = cart
         new_cart_item.item = item
+        # quantity_change = request.POST['quantity']
+        # print('quantity change', quantity_change)
+        # item_to_change = Cart_items.objects.get(item_id=item.id)
+        # item_to_change.quantity = quantity_change
+        # item_to_change.save(['quantity'])
         new_cart_item.quantity = 1
         new_cart_item.save()
-        print('hit right before redirect on post request')
         return redirect('cart_detail')
     else:
         return redirect('login')
@@ -82,21 +81,17 @@ def add_to_cart(request, item_id):
 def delete_from_cart(request, item_id):
     if request.user.is_authenticated and request.method == "POST":
         cart = Cart.objects.get(user=request.user)
-        print('user cart found', cart.id)
         item = Item.objects.get(id=item_id)
-        print('item to be deleted is', item.name)
-        # item_to_remove = Cart_items.objects.get(item=item_id)
-        item_to_remove = Cart_items.objects.filter(id=item_id).delete()
-        print("SAVED. Cart now looks like:", item_to_remove)
-        cart.save()
-        print('save worked')
-        # item_to_remove.quantity = 0
-        # item_to_remove.cart = cart 
-        # item_to_remove.item = item
-        # item_to_remove.save()
-        # cart.save()
-        print('hit right before redirect on delete request')
-        return render(request, 'cart_detail.html')
+        item_to_remove = Cart_items.objects.get(item_id=item_id)
+        item_to_remove.delete() 
+        items = Item.objects.filter(carts=cart).values()
+        for item in items:
+            cart_item = Cart_items.objects.get(item=item['id'], cart=cart.id)
+            item['quantity'] = cart_item.quantity
+            item['total_price'] = cart_item.quantity * item['price']
+            item['update_quantity_form'] = CartAddItemForm(initial={'quantity': cart_item.quantity, 'update': True})
+        return render(request, 'cart_detail.html', {'items': items})
+
 
 def signup_view(request):
     if request.method == 'POST':
@@ -139,10 +134,10 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    # return  HttpResponseRedirect('index')
     return redirect('index')
 
-
+def previously_featured(request):
+    return render(request, 'previously_featured.html') 
 
 # def logout(request):
 #     if request.user is not None:

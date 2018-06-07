@@ -7,71 +7,71 @@
 
 {% block content %}
 
-    <div class="container">
-        <div class="row">
-        <h2 class="category-name">My Shopping Bag</h2>
+   <div class="container">
+      <div class="row">
+      <h2 class="category-name">My Shopping Bag</h2>
             <span class="badge pull-right">
-                {% with total_items=items|length %}
-                    {% if items|length > 0 %}
-                        My Shopping Bag:
-                        <a href="{% url "cart_detail" %}" style="color: #ffffff">
-                            {{ total_items }} item{{ total_items|pluralize}}, USD ${{ user.cart.get_total_price }}
-                        </a>
-                        {% else %}
-                        Your cart is empty.
-                    {% endif %}
-                {% endwith %}
-            </span>
-        </h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Remove</th>
-                        <th>Unit Price</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for item in items %}
-                        <tr>
-                            <td>
-                                <a href="{{ item.get__absolute_url }}">
-                                    <img class="cart-img" src="{% if item.image %} {{ item.image }} {% else %} {% static 'img/default.png' %} {% endif %}" alt="..." >
-                                </a>
-                            </td>
-                            <td>{{ item.name }}</td>
-                            <td>
-                                <form action="{% url "add_to_cart" item.id %}" method="post">
-                                    {% csrf_token %}
-                                    {{ item.update_quantity_form.quantity }}
-                                    {{ item.update_quantity_form.update }}
-                                    <input type="submit" value="Update" class="btn btn-info">
-                                </form>
-                            </td>
-                            <td>
-                                <form action="{% url 'delete_from_cart' item.id %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="submit" value="Delete">
-                                </form>
-                            </td>
-                            <td>USD ${{ item.price }}</td>
-                            <td>USD ${{ item.total_price }}</td>
-                        </tr>
-                {% endfor %}
-                <tr class="last-tr">
-                    <td><b>Total</b></td>
-                    <td colspan="4"></td>
-                    <td colspan="num"><b>USD ${{ user.cart.get_total_price }}</b></td>
-                </tr>
-                </tbody>
-            </table>
-        <p class="text-right">
-            <a href="{% url "index" %}" class="btn btn-default">Continue Shopping</a>
-            <a href="" class="btn btn-primary">Checkout</a>
-        </p>
-        </div>
-    </div>
+               {% with total_items=items|length %}
+                  {% if items|length > 0 %}
+                     My Shopping Bag:
+                     <a href="{% url "cart_detail" %}" style="color: #ffffff">
+                      {{ total_items }} item{{ total_items|pluralize}}, USD ${{ user.cart.get_total_price }}
+                     </a>
+                     {% else %}
+                     Your cart is empty.
+                  {% endif %}
+             {% endwith %}
+         </span>
+     </h2>
+         <table class="table table-striped">
+             <thead>
+                 <tr>
+                     <th>Image</th>
+                     <th>Name</th>
+                     <th>Quantity</th>
+                     <th>Remove</th>
+                     <th>Unit Price</th>
+                     <th>Price</th>
+                 </tr>
+             </thead>
+             <tbody>
+             {% for item in items %}
+                     <tr>
+                         <td>
+                             <a href="{{ item.get__absolute_url }}">
+                                 <img class="cart-img" src="{% if item.image %} {{ item.image }} {% else %} {% static 'img/default.png' %} {% endif %}" alt="..." >
+                             </a>
+                         </td>
+                         <td>{{ item.name }}</td>
+                         <td>
+                              <form action="{% url "add_to_cart" item.id %}" method="post">
+                                 {% csrf_token %}
+                                 {{ item.update_quantity_form.quantity }}
+                                 {{ item.update_quantity_form.update }}
+                                 <input type="submit" value="Update" class="btn btn-info">
+                              </form>
+                         </td>
+                         <td>
+                             <form action="{% url 'delete_from_cart' item.id %}" method="post">
+                                 {% csrf_token %}
+                                 <input type="submit" value="Delete">
+                             </form>
+                         </td>
+                         <td>USD ${{ item.price }}</td>
+                         <td>USD ${{ item.total_price }}</td>
+                     </tr>
+             {% endfor %}
+             <tr class="last-tr">
+                 <td><b>Total</b></td>
+                 <td colspan="4"></td>
+                 <td colspan="num"><b>USD ${{ user.cart.get_total_price }}</b></td>
+             </tr>
+             </tbody>
+         </table>
+     <p class="text-right">
+         <a href="{% url "index" %}" class="btn btn-default">Continue Shopping</a>
+         <a href="" class="btn btn-primary">Checkout</a>
+     </p>
+     </div>
+ </div>
 {% endblock %}
