@@ -15,6 +15,10 @@ body {
     padding-bottom: 50px;
 }
 
+p {
+    font-size: 16px;
+}
+
 /* NAV BAR */
 .lead {
     font-family: 'Delius Swash Caps', cursive;
@@ -25,9 +29,23 @@ body {
     font-size: 50px;
 }
 
+.vendor-biz:hover {
+    color: white;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+
 .vendor-name {
     font-family: 'Rozha One', serif;
     font-size: 20px;
+    color: black;
+}
+
+.featured {
+    color: black;
 }
 
 .featured:hover {
@@ -69,6 +87,11 @@ body {
     margin-top: -40px;
 }
 
+nav ul li {
+    font-family: 'Rozha One', serif;
+    font-size: 16px;
+}
+
 nav ul li.active-page {
   background-color:white;
   border-radius: 10px;
@@ -86,24 +109,36 @@ nav ul li.active-page {
     /*width: auto;*/
 }
 
+.caption {
+    text-align: center;
+    font-family: 'Rozha One', serif;
+}
+
 /* CATEGORY HEADINGS AND LOGIN/SIGN UP HEADING */
 .category-name {
     text-align: center;
     font-family: 'Delius Swash Caps', cursive;
     font-size: 40px;
     color: #9EEDA9;
+    text-shadow:
+        -1px -1px 0 #808080,
+        1px -1px 0 #808080,
+        -1px 1px 0 #808080,
+        1px 1px 0 #808080;
     /*margin-top: 40px;*/
 }
 
 /* ITEM DETAIL PAGE*/
 .detailz {
     padding: 40px;
-    background-color: white;
+    background-color: #EEEEEE;
+    border-radius: 5px;
 }
 
 .detail-img {
     height: 400px; 
     width: auto;
+    border-radius: 5px;
 }
 
 /*CART DETAIL PAGE*/
@@ -125,6 +160,7 @@ nav ul li.active-page {
     padding: 20px;
     background-color: white;
     height: auto;
+    border-radius: 5px;
 }
 
 footer {
@@ -141,4 +177,26 @@ footer li {
     list-style-type: none;
     padding: 5px;
     text-align: center;
+    font-weight: bold;
 }
+
+/* Previously Featured Page Stying*/
+#jumbo {
+    padding: 10px;
+    text-align: center;
+    border: solid black 10px;
+}
+
+#jumbo-feat {
+    padding: 5px;
+    text-align: center;
+}
+
+.contact-btn {
+    position: center;
+}
+
+.btn {
+    font-family: monospace;
+}
+

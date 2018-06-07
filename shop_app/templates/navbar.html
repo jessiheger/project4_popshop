@@ -6,9 +6,9 @@
             <span class="sr-only">Toggle navigation</span>
          </button>
       </div>
-      {% if request.path != '/previously_featured/' %}
+      {% if request.path != "/previously_featured/" and request.path != "/about/" %}
          <div>
-            <a class="featured" href="{% url 'index' %}"><span class="vendor-biz">Frenchie Fab </span><span class="vendor-name">by Karla Ortiz</span></a>
+            <a class="featured" href="{% url 'index' %}"><span class="vendor-biz">Frenchie Fab </span></a><span class="vendor-name">by Karla Ortiz</span>
          </div>
       {% endif %}
       <div class="row">
@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse" id="category-nav">
                <span>
                   <ul class="nav navbar-nav navbar-right">
-                     <li>
+                     <li {% if request.path == '/previously_featured/' %} class="active active-page"{% endif %}>
                         <a class="categories" href="{% url 'about' %}">About</a>
                      </li>
                      <li {% if not category %} class="active active-page"{% endif %}>

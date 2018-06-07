@@ -54,7 +54,7 @@
                          <td>
                              <form action="{% url 'delete_from_cart' item.id %}" method="post">
                                  {% csrf_token %}
-                                 <input type="submit" value="Delete">
+                                 <button class="btn btn-default" type="submit"  value="Delete">Delete</button>
                              </form>
                          </td>
                          <td>USD ${{ item.price }}</td>

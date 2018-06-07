@@ -37,8 +37,7 @@ def detail(request, item_id):
 
 
 ###### CART FUNCTIONS ########
-
-# Decorator to require that a view only accepts the POST method:
+# See My Cart
 @require_http_methods(["GET", "POST"])
 
 def cart_detail(request):
@@ -59,6 +58,8 @@ def cart_detail(request):
     else:
         return redirect('login')
 
+##### TO DO: ADD IF ELSE STATEMENT (if new item, add one or input #; if existing item, change quantity)
+# Add New Item to Cart or Change Quatity of Existing Cart Item
 def add_to_cart(request, item_id):
     if request.user.is_authenticated:
         print('ID of item added to cart', item_id) 
@@ -78,6 +79,7 @@ def add_to_cart(request, item_id):
     else:
         return redirect('login')
 
+#Remove Item from Cart
 def delete_from_cart(request, item_id):
     if request.user.is_authenticated and request.method == "POST":
         cart = Cart.objects.get(user=request.user)
@@ -93,6 +95,8 @@ def delete_from_cart(request, item_id):
         return render(request, 'cart_detail.html', {'items': items})
 
 
+###### AUTH FUNCTIONS ########
+# Sign Up as new Customer
 def signup_view(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -112,7 +116,7 @@ def signup_view(request):
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})
 
-
+# Log in to site to create/view cart
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -132,25 +136,20 @@ def login_view(request):
         form = LoginForm()
         return render(request, 'login.html', {'form': form})
 
+# Log Out
 def logout_view(request):
     logout(request)
     return redirect('index')
 
+#### OTHER PAGE VIEWS ####
+# See info about previously featured busineses
 def previously_featured(request):
     print ("page is", request.path)
     return render(request, 'previously_featured.html') 
 
+# About PopShop 
 def about(request):
     print ("page is", request.path)
     return render(request, 'about.html') 
-
-# def logout(request):
-#     if request.user is not None:
-#         if request.user. is_active:
-#             logout(request)
-#             return redirect('login')
-#     else:
-#         form = LoginForm()
-#         return render(request, 'login.html', {'form': form})  
 
 
