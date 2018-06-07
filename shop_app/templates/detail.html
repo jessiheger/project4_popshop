@@ -20,6 +20,7 @@
                         <input type="submit" value="Add to bag" class="btn btn-primary">
                      </form>
                      <p>{{ item.description }}</p>
+                     <h5>By: <a href="{% url 'previously_featured' %}">{{ item.brand }}</a></h5>
                   </div>
                <!-- </div> -->
             </div>

@@ -33,6 +33,7 @@ class Item(models.Model):
     available = models.BooleanField(default=True)
     stock = models.PositiveIntegerField()
     image = models.CharField(max_length=1000)
+    brand = models.CharField(max_length=100)
     carts = models.ManyToManyField('Cart', blank=False, through='Cart_items')
  
     class Meta:

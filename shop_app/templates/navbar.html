@@ -6,17 +6,22 @@
             <span class="sr-only">Toggle navigation</span>
          </button>
       </div>
-      <div>
-         <a class="featured" href="{% url 'index' %}"><span class="vendor-biz">Frenchie Fab </span><span class="vendor-name">by Karla Ortiz</span></a>
-      </div>
+      {% if request.path != '/previously_featured/' %}
+         <div>
+            <a class="featured" href="{% url 'index' %}"><span class="vendor-biz">Frenchie Fab </span><span class="vendor-name">by Karla Ortiz</span></a>
+         </div>
+      {% endif %}
       <div class="row">
          <div class="col-sm-12">
             <div>
-               <span class="brought-by">brought to you by </span><span class="popshop">PopShop</span>
+               <span class="brought-by">brought to you by </span><span class="popshop"><a href="{% url 'index' %}">PopShop</a></span>
             </div>
             <div class="collapse navbar-collapse" id="category-nav">
                <span>
                   <ul class="nav navbar-nav navbar-right">
+                     <li>
+                        <a class="categories" href="{% url 'about' %}">About</a>
+                     </li>
                      <li {% if not category %} class="active active-page"{% endif %}>
                         <a class="categories" href="{% url 'index' %}">All</a>
                      </li>

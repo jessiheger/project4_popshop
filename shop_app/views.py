@@ -137,7 +137,12 @@ def logout_view(request):
     return redirect('index')
 
 def previously_featured(request):
+    print ("page is", request.path)
     return render(request, 'previously_featured.html') 
+
+def about(request):
+    print ("page is", request.path)
+    return render(request, 'about.html') 
 
 # def logout(request):
 #     if request.user is not None:
