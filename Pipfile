@@ -1,0 +1,9 @@
+[[source]]
+verify_ssl = true
+
+[packages]
+django = "*"
+psycopg2 ="*"
+
+[requires]
+python_version = "3.6.4"
