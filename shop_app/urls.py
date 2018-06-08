@@ -8,6 +8,7 @@ from django.conf.urls import url
 urlpatterns = [
     path('', views.index, name='index'),
     path('cart/', views.cart_detail, name='cart_detail'),
+    path('update/<item_id>/<cart_id>/', views.update_quantity, name='update_quantity'),
     path('logout/', views.logout_view, name='logout'),
     path('login/', views.login_view, name='login'),
     path('signup/', views.signup_view, name='signup'),

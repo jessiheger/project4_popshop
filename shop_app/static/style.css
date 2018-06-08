@@ -66,7 +66,7 @@ p {
     margin-bottom: 0px; 
     padding-top: 20px;
     /*padding-bottom: 20px;*/
-    background-color: #9EEDA9;
+    background-color: #B9F7D6;
 }
 
 .brought-by {
@@ -119,7 +119,7 @@ nav ul li.active-page {
     text-align: center;
     font-family: 'Delius Swash Caps', cursive;
     font-size: 40px;
-    color: #9EEDA9;
+    color: #B9F7D6;
     text-shadow:
         -1px -1px 0 #808080,
         1px -1px 0 #808080,
@@ -164,7 +164,7 @@ nav ul li.active-page {
 }
 
 footer {
-    background-color: #9EEDA9;
+    background-color: #B9F7D6;
     position: fixed;
     bottom: 0;
     width: 100%;

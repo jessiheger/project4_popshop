@@ -47,14 +47,16 @@ def cart_detail(request):
         items = Item.objects.filter(carts=cart).values()
         # cart_items = Cart_items.objects.filter(item_id=item_id).values()
         print("ITEMS IN MY CART", items)
+        cart_price = 0
         for item in items:
             cart_item = Cart_items.objects.get(item=item['id'], cart=cart.id)
             print('cart_item ID:', cart_item)
             print('QTY', cart_item.quantity)
             item['quantity'] = cart_item.quantity
             item['total_price'] = cart_item.quantity * item['price']
+            cart_price += item['total_price']
             item['update_quantity_form'] = CartAddItemForm(initial={'quantity': cart_item.quantity, 'update': True})
-        return render(request, 'cart_detail.html', {'items': items, 'cart_items': cart_item})
+        return render(request, 'cart_detail.html', {'items': items, 'cart_price': cart_price})
     else:
         return redirect('login')
 
@@ -68,16 +70,29 @@ def add_to_cart(request, item_id):
         new_cart_item = Cart_items()
         new_cart_item.cart = cart
         new_cart_item.item = item
-        # quantity_change = request.POST['quantity']
-        # print('quantity change', quantity_change)
+        quantity_change = request.POST['quantity']
+        print('quantity change', quantity_change)
         # item_to_change = Cart_items.objects.get(item_id=item.id)
         # item_to_change.quantity = quantity_change
         # item_to_change.save(['quantity'])
-        new_cart_item.quantity = 1
+        new_cart_item.quantity = quantity_change
         new_cart_item.save()
         return redirect('cart_detail')
     else:
         return redirect('login')
+
+def update_quantity(request, item_id, cart_id):
+    if request.user.is_authenticated:
+        print('YAY UPDATE ROUTE')
+        cart_item = Cart_items.objects.get(item=item_id, cart=cart_id)
+        print('cart_item', cart_item)
+        cart_item.quantity = request.POST['quantity']
+        print('request.POST[quantity]', request.POST['quantity'])
+        cart_item.save()
+        return redirect('cart_detail')
+    else:
+        return redirect('login')
+
 
 #Remove Item from Cart
 def delete_from_cart(request, item_id):

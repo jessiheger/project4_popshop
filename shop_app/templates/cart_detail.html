@@ -15,7 +15,7 @@
                   {% if items|length > 0 %}
                      My Shopping Bag:
                      <a href="{% url "cart_detail" %}" style="color: #ffffff">
-                      {{ total_items }} item{{ total_items|pluralize}}, USD ${{ user.cart.get_total_price }}
+                      {{ total_items }} item{{ total_items|pluralize}}, USD ${{ cart_price }}
                      </a>
                      {% else %}
                      Your cart is empty.
@@ -44,7 +44,7 @@
                          </td>
                          <td>{{ item.name }}</td>
                          <td>
-                              <form action="{% url "add_to_cart" item.id %}" method="post">
+                              <form action="{% url "update_quantity" item.id user.cart.id %}" method="post">
                                  {% csrf_token %}
                                  {{ item.update_quantity_form.quantity }}
                                  {{ item.update_quantity_form.update }}
@@ -64,7 +64,7 @@
              <tr class="last-tr">
                  <td><b>Total</b></td>
                  <td colspan="4"></td>
-                 <td colspan="num"><b>USD ${{ user.cart.get_total_price }}</b></td>
+                 <td colspan="num"><b>USD ${{ cart_price }}</b></td>
              </tr>
              </tbody>
          </table>
