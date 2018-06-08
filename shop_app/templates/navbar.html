@@ -47,7 +47,7 @@
                   <ul class="nav navbar-nav nav2ul">
                      <li  class="active active-page">
                         <a class="categories" href="{% url 'about' %}">About Us</a>
-                     </sli>
+                     </li>
                      <li  class="active active-page">
                         <a class="categories" href="{% url 'previously_featured' %}">Previously Featured</a>
                      </li>
@@ -71,13 +71,15 @@
                         {% endif %}
                      </li>
                   </ul>
-               <li>
-                  <a href="{% url 'cart_detail' %}"><img src="/static/img/cart.png"></a>
-               </li>
+                  <!-- <ul> -->
+                     <li>
+                        <a href="{% url 'cart_detail' %}"><img src="/static/img/cart.png"></a>
+                     </li>
+                  <!-- </ul> -->
             </span>
           <!-- </div> -->
       </div>
-   </div><!-- /c.ontainer-fluid -->
+   </div><!-- -->
 <!-- </div> -->
 
 
