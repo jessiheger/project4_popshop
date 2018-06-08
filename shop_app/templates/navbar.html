@@ -19,18 +19,62 @@
          <span class="pull-right"><span class="brought-by">currently featuring: </span><span ><a class="vendor-biz-AboutPg" href="{% url 'index' %}">Frenchie Fab</a></span></span><br>
          <div class="pull-right" id="about-popshop"><a class="categories" href="{% url 'about' %}">Shop now!</a></div>
       {% endif %}
+      <hr>
+      <span>
+               {% if request.path != "/previously_featured/" and request.path != "/about/" %}
+                  <ul class="nav navbar-nav">
+                     <li {% if not category %} class="active active-page"{% endif %}>
+                        <a class="categories" href="{% url 'index' %}">Shop All</a>
+                     </li>
+                     {% for c in categories %}
+                     <li {% if category.slug == c.slug %} class="active active-page" {% endif %}>
+                        <a class="categories" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                     </li>
+                     {% endfor %}
+                  </ul>
+               {% else %}
+                  <ul class="nav navbar-nav">
+                     <li class="active active-page">
+                        <a class="categories" href="{% url 'about' %}">About Us</a>
+                     </li>
+                     <li  class="active active-page">
+                        <a class="categories" href="{% url 'previously_featured' %}">Previously Featured</a>
+                     </li>
+                     <li  class="active active-page">
+                        <a class="categories" href="{% url 'about' %}">Contact</a>
+                     </li>
+                  </ul>
+               {% endif %}
+                  <ul class="nav navbar-nav pull-right">
+                     <li class="dropdown">
+                        {% if request.user.is_authenticated %}
+                        <a href="#" class="dropdown-toggle auth" data-toggle="dropdown">{{ request.user.username }}<b class="caret"></b></a>
+                        <ul class="dropdown-menu auth">
+                           <li><a href="{% url 'index' %}">purchase history</a></li>
+                           <li><a href="{% url 'logout' %}">logout</a></li>
+                           {% else %}
+                           <li class="divider"></li>
+                           <li><a class="auth" href="{% url 'login' %}">Login</a></li>
+                           <li><a class="auth" href="{% url 'signup' %}">Sign up</a></li>
+                        </ul>
+                        {% endif %}
+                     </li>
+                  </ul>
+                     <li>
+                        <a href="{% url 'cart_detail' %}"><img src="/static/img/cart.png"></a>
+                     </li>
+            </span>
    </div>
 </div>
             
       <!-- SECOND NAV BAR -->
-   <div class="navbar navbar-static-top sticky-top navbar2" role="navigation" style="background-color: #B9F7D6"> 
+   <!-- <div class="navbar navbar-static-top sticky-top navbar2" role="navigation" style="background-color: #B9F7D6"> 
       <div class="container-fluid">
           <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse">
                   <span class="sr-only">Toggle navigation</span>
               </button>
           </div>
-          <!-- <div class="collapse navbar-collapse"> -->
             <span>
                {% if request.path != "/previously_featured/" and request.path != "/about/" %}
                   <ul class="nav navbar-nav nav2ul">
@@ -71,15 +115,11 @@
                         {% endif %}
                      </li>
                   </ul>
-                  <!-- <ul> -->
                      <li>
                         <a href="{% url 'cart_detail' %}"><img src="/static/img/cart.png"></a>
                      </li>
-                  <!-- </ul> -->
-            </span>
-          <!-- </div> -->
+            </span> -->
       </div>
    </div><!-- -->
-<!-- </div> -->
 
 

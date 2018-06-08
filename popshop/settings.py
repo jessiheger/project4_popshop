@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import dj-database-url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +26,7 @@ SECRET_KEY = 'd=xgd+zvf3c_y*wnk%h#y3^53t&2)_*!w%09pprjbuut0g&32@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['popshop-site.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -74,13 +75,18 @@ WSGI_APPLICATION = 'popshop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': ('popshop'),
-    }
-}
+# COMMENT THIS BACK IN WHEN USING LOCAL HOST
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': ('popshop'),
+#     }
+# }
 
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(
+    default='postgres://clawuzftogmacp:4c7c7bf0653ea142a1c90fdd8c885c9d46a2eb101264b4b1dcf4908d027d0788@ec2-54-204-18-53.compute-1.amazonaws.com:5432/d2ms8guh466e3f'
+    )
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
