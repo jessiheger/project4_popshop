@@ -76,17 +76,18 @@ WSGI_APPLICATION = 'popshop.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 # COMMENT THIS BACK IN WHEN USING LOCAL HOST
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': ('popshop'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': ('popshop'),
+    }
+}
 
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(
-    default='postgres://clawuzftogmacp:4c7c7bf0653ea142a1c90fdd8c885c9d46a2eb101264b4b1dcf4908d027d0788@ec2-54-204-18-53.compute-1.amazonaws.com:5432/d2ms8guh466e3f'
-    )
+#COMMENT THIS BACK IN WHEN USING HEROKU
+# DATABASES = {}
+# DATABASES['default'] = dj_database_url.config(
+#     default='postgres://clawuzftogmacp:4c7c7bf0653ea142a1c90fdd8c885c9d46a2eb101264b4b1dcf4908d027d0788@ec2-54-204-18-53.compute-1.amazonaws.com:5432/d2ms8guh466e3f'
+#     )
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -124,5 +125,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+#     )
 
